@@ -1,12 +1,12 @@
-import { defaultGenerationModels } from '../ai/models/index.js';
+import { getGenerationModels } from '../utilities/getGenerationModels.js';
 import { PLUGIN_INSTRUCTIONS_TABLE } from '../defaults.js';
-const groupSettings = (pluginConfig)=>pluginConfig.generationModels(defaultGenerationModels).reduce((fields, model)=>{
+const groupSettings = (pluginConfig)=>getGenerationModels(pluginConfig).reduce((fields, model)=>{
         if (model.settings) {
             fields.push(model.settings);
         }
         return fields;
     }, []);
-const modelOptions = (pluginConfig)=>pluginConfig.generationModels(defaultGenerationModels).map((model)=>{
+const modelOptions = (pluginConfig)=>getGenerationModels(pluginConfig).map((model)=>{
         return {
             fields: model.fields,
             label: model.name,

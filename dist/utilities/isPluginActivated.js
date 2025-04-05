@@ -1,5 +1,6 @@
-export const isPluginActivated = ()=>{
-    return process.env.OPENAI_API_KEY || process.env.ANTHROPIC_API_KEY;
+import { getGenerationModels } from './getGenerationModels.js';
+export const isPluginActivated = (pluginConfig)=>{
+    return getGenerationModels(pluginConfig).length > 0;
 };
 
 //# sourceMappingURL=isPluginActivated.js.map

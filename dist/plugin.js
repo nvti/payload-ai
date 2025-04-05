@@ -8,13 +8,13 @@ import { init } from './init.js';
 import { translations } from './translations/index.js';
 import { isPluginActivated } from './utilities/isPluginActivated.js';
 import { updateFieldsConfig } from './utilities/updateFieldsConfig.js';
+import { defaultGenerationModels } from './ai/models/index.js';
+import { getGenerationModels } from './utilities/getGenerationModels.js';
 const defaultPluginConfig = {
     collections: {},
     disableSponsorMessage: false,
     generatePromptOnInit: true,
-    generationModels (defaultModels) {
-        return defaultModels;
-    }
+    generationModels: defaultGenerationModels
 };
 const sponsorMessage = `
 ╔═══════════════════════════════════════════════════════════════╗
@@ -40,7 +40,8 @@ const payloadAiPlugin = (pluginConfig)=>(incomingConfig)=>{
             ...defaultPluginConfig,
             ...pluginConfig
         };
-        const isActivated = isPluginActivated();
+        pluginConfig.generationModels = getGenerationModels(pluginConfig);
+        const isActivated = isPluginActivated(pluginConfig);
         let updatedConfig = {
             ...incomingConfig
         };

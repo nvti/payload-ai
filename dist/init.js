@@ -1,7 +1,7 @@
-import { defaultGenerationModels } from './ai/models/index.js';
 import { seedPrompts } from './ai/prompts.js';
 import { systemGenerate } from './ai/utils/systemGenerate.js';
 import { PLUGIN_INSTRUCTIONS_TABLE } from './defaults.js';
+import { getGenerationModels } from './utilities/getGenerationModels.js';
 export const init = async (payload, fieldSchemaPaths, pluginConfig)=>{
     payload.logger.info(`— AI Plugin: Initializing...`);
     const paths = Object.keys(fieldSchemaPaths);
@@ -40,7 +40,7 @@ export const init = async (payload, fieldSchemaPaths, pluginConfig)=>{
                 collection: PLUGIN_INSTRUCTIONS_TABLE,
                 data: {
                     'field-type': fieldType,
-                    'model-id': pluginConfig.generationModels(defaultGenerationModels).find((a)=>{
+                    'model-id': getGenerationModels(pluginConfig).find((a)=>{
                         return a.fields.includes(fieldType);
                     })?.id,
                     prompt: generatedPrompt,

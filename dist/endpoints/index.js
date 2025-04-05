@@ -1,9 +1,9 @@
-import { defaultGenerationModels } from '../ai/models/index.js';
 import { defaultPrompts } from '../ai/prompts.js';
 import { PLUGIN_API_ENDPOINT_GENERATE, PLUGIN_API_ENDPOINT_GENERATE_UPLOAD, PLUGIN_INSTRUCTIONS_TABLE, PLUGIN_NAME } from '../defaults.js';
 import { registerEditorHelper } from '../libraries/handlebars/helpers.js';
 import { handlebarsHelpersMap } from '../libraries/handlebars/helpersMap.js';
 import { replacePlaceholders } from '../libraries/handlebars/replacePlaceholders.js';
+import { getGenerationModels } from 'src/utilities/getGenerationModels.js';
 const assignPrompt = async (action, { type, actionParams, context, field, layout, systemPrompt = '', template })=>{
     const prompt = await replacePlaceholders(template, context);
     const toLexicalHTML = type === 'richText' ? handlebarsHelpersMap.toHTML.name : '';
@@ -61,7 +61,7 @@ export const endpoints = (pluginConfig)=>({
                     return l.code === locale;
                 });
                 const localeInfo = localeData?.label[defaultLocale] || locale;
-                const model = pluginConfig.generationModels(defaultGenerationModels).find((model)=>model.id === instructions['model-id']);
+                const model = getGenerationModels(pluginConfig).find((model)=>model.id === instructions['model-id']);
                 const settingsName = model.settings?.name;
                 const modelOptions = instructions[settingsName] || {};
                 const prompts = await assignPrompt(action, {
@@ -113,7 +113,7 @@ export const endpoints = (pluginConfig)=>({
                 const text = await replacePlaceholders(promptTemplate, contextData);
                 const modelId = instructions['model-id'];
                 const uploadCollectionSlug = instructions['relation-to'];
-                const model = pluginConfig.generationModels(defaultGenerationModels).find((model)=>model.id === modelId);
+                const model = getGenerationModels(pluginConfig).find((model)=>model.id === modelId);
                 const settingsName = model.settings?.name;
                 const modelOptions = instructions[settingsName] || {};
                 const result = await model.handler?.(text, modelOptions);

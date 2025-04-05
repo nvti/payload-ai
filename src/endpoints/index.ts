@@ -2,7 +2,6 @@ import type { PayloadRequest } from 'payload'
 
 import type { ActionMenuItems, Endpoints, PluginConfig } from '../types.js'
 
-import { defaultGenerationModels } from '../ai/models/index.js'
 import { defaultPrompts } from '../ai/prompts.js'
 import {
   PLUGIN_API_ENDPOINT_GENERATE,
@@ -13,7 +12,7 @@ import {
 import { registerEditorHelper } from '../libraries/handlebars/helpers.js'
 import { handlebarsHelpersMap } from '../libraries/handlebars/helpersMap.js'
 import { replacePlaceholders } from '../libraries/handlebars/replacePlaceholders.js'
-import { getGenerationModels } from 'src/utilities/getGenerationModels.js'
+import { getGenerationModels } from '../utilities/getGenerationModels.js'
 
 const assignPrompt = async (
   action: ActionMenuItems,

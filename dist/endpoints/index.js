@@ -3,7 +3,7 @@ import { PLUGIN_API_ENDPOINT_GENERATE, PLUGIN_API_ENDPOINT_GENERATE_UPLOAD, PLUG
 import { registerEditorHelper } from '../libraries/handlebars/helpers.js';
 import { handlebarsHelpersMap } from '../libraries/handlebars/helpersMap.js';
 import { replacePlaceholders } from '../libraries/handlebars/replacePlaceholders.js';
-import { getGenerationModels } from 'src/utilities/getGenerationModels.js';
+import { getGenerationModels } from '../utilities/getGenerationModels.js';
 const assignPrompt = async (action, { type, actionParams, context, field, layout, systemPrompt = '', template })=>{
     const prompt = await replacePlaceholders(template, context);
     const toLexicalHTML = type === 'richText' ? handlebarsHelpersMap.toHTML.name : '';
